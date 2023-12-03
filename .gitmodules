@@ -1,0 +1,6 @@
+[submodule "TicTacToeFront"]
+	path = TicTacToeFront
+	url = https://github.com/kacpermejs/TicTacToeFront
+[submodule "TicTacToeBack"]
+	path = TicTacToeBack
+	url = https://github.com/kacpermejs/TicTacToeBack

@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb-container
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongo-data:/data/db
+    networks:
+      - internalnet
+
+  tic-tac-toe-back:
+    build:
+      context: ./TicTacToeBack/
+    container_name: spring-boot-container
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongodb
+    networks:
+      - internalnet
+
+  tic-tac-toe-front:
+    build:
+      context: ./TicTacToeFront/
+    container_name: tic-tac-toe-front-container
+    ports:
+      - "80:80"
+    expose:
+      - 80
+    depends_on:
+      - tic-tac-toe-back
+    networks:
+      - internalnet
+
+networks:
+  internalnet:
+    driver: bridge
