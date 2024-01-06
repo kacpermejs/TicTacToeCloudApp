@@ -1,13 +1,17 @@
 version: '3.8'
 
 services:
-  mongodb:
-    image: mongo:latest
-    container_name: mongodb-container
+  postgres:
+    image: postgres:12
+    container_name: postgres-db-prod
     ports:
-      - "27017:27017"
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
     volumes:
-      - ./mongo-data:/data/db
+      - pgdata:/var/lib/postgresql/data 
     networks:
       - internalnet
 
@@ -18,7 +22,11 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - mongodb
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
     networks:
       - internalnet
 
@@ -38,3 +46,6 @@ services:
 networks:
   internalnet:
     driver: bridge
+
+volumes:
+  pgdata: {}
