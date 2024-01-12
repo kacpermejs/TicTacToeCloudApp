@@ -26,9 +26,9 @@ services:
     depends_on:
       - postgres
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_DATASOURCE_URL: ${DB_URL}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRE_PASSWORD}
 
       AWS_REGION: ${AWS_REGION}
       COGNITO_ISSUER_URI: ${COGNITO_ISSUER_URI}
