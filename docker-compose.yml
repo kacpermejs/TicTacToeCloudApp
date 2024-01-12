@@ -1,12 +1,12 @@
 version: '3.8'
 
 services:
-  backend:
+  backend-prod:
     build:
       context: ./TicTacToeBack/
       args:
         SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-prod}
-    container_name: bakcend
+    container_name: bakcend-prod
     ports:
       - "8080:8080"
     environment:
@@ -22,12 +22,12 @@ services:
     networks:
       - internalnet
 
-  frontend:
+  frontend-prod:
     build:
       context: ./TicTacToeFront/
       args:
         NODE_ENV: ${NODE_ENV:-production}
-    container_name: tic-tac-toe-front-container
+    container_name: frontend-prod
     ports:
       - "80:80"
     expose:
