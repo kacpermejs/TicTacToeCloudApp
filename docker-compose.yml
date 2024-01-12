@@ -1,19 +1,17 @@
 version: '3.8'
 
 services:
-  tic-tac-toe-back:
+  backend:
     build:
       context: ./TicTacToeBack/
       args:
         SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-prod}
-    container_name: spring-boot-container
+    container_name: bakcend
     ports:
       - "8080:8080"
-    depends_on:
-      - postgres
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
-      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_URL: ${DB_URL}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRE_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${POSTGRE_PASSWORD_PROD}
 
       AWS_REGION: ${AWS_REGION}
@@ -24,7 +22,7 @@ services:
     networks:
       - internalnet
 
-  tic-tac-toe-front:
+  frontend:
     build:
       context: ./TicTacToeFront/
       args:
@@ -43,4 +41,5 @@ services:
 
 networks:
   internalnet:
+    name: internalnet
     driver: bridge
