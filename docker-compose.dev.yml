@@ -1,12 +1,26 @@
 version: '3.8'
 
 services:
-  tic-tac-toe-back:
+  postgres:
+    image: postgres:12
+    container_name: postgres-db-dev
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data 
+    networks:
+      - internalnet
+
+  backend:
     build:
       context: ./TicTacToeBack/
       args:
-        SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-prod}
-    container_name: spring-boot-container
+        SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-dev}
+    container_name: backend
     ports:
       - "8080:8080"
     depends_on:
@@ -14,33 +28,33 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
       SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: ${POSTGRE_PASSWORD_PROD}
+      SPRING_DATASOURCE_PASSWORD: postgres
 
       AWS_REGION: ${AWS_REGION}
       COGNITO_ISSUER_URI: ${COGNITO_ISSUER_URI}
       COGNITO_JWK_SET_URI: ${COGNITO_JWK_SET_URI}
       COGNITO_APP_CLIENT_ID: ${COGNITO_APP_CLIENT_ID}
-      
+
     networks:
       - internalnet
 
-  tic-tac-toe-front:
+  frontend:
     build:
       context: ./TicTacToeFront/
-      args:
-        NODE_ENV: ${NODE_ENV:-production}
-    container_name: tic-tac-toe-front-container
+    container_name: frontend
     ports:
       - "80:80"
     expose:
       - 80
     depends_on:
-      - tic-tac-toe-back
+      - backend
     networks:
       - internalnet
-    environment:
-      - NODE_ENV=${NODE_ENV:-production}
 
 networks:
   internalnet:
+    name: internalnet
     driver: bridge
+
+volumes:
+  pgdata: {}
