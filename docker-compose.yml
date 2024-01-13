@@ -25,13 +25,15 @@ services:
   frontend-prod:
     build:
       context: ./TicTacToeFront/
+      args:
+        configuration: production
     container_name: frontend-prod
     ports:
       - "80:80"
     expose:
       - 80
     depends_on:
-      - tic-tac-toe-back
+      - backend-prod
     networks:
       - internalnet
 

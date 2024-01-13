@@ -41,6 +41,8 @@ services:
   frontend:
     build:
       context: ./TicTacToeFront/
+      args:
+        configuration: development
     container_name: frontend
     ports:
       - "80:80"
