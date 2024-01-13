@@ -6,7 +6,7 @@ services:
       context: ./TicTacToeBack/
       args:
         SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-prod}
-    container_name: bakcend-prod
+    container_name: backend-prod
     ports:
       - "8080:8080"
     environment:
