@@ -1,0 +1,41 @@
+version: '3.8'
+
+#Fill in all the secrets
+
+services:
+  backend-prod:
+    image: 322507431145.dkr.ecr.us-east-1.amazonaws.com/tic-tac-toe-beanstalk-backend:1.0.0
+    container_name: backend-prod
+    ports:
+      - "8080:8080"
+    expose:
+      - 8080
+    environment:
+      POSTGRE_DDL_AUTO:
+      SPRING_DATASOURCE_URL:
+      SPRING_DATASOURCE_USERNAME:
+      SPRING_DATASOURCE_PASSWORD:
+
+      AWS_REGION:
+      COGNITO_ISSUER_URI:
+      COGNITO_JWK_SET_URI:
+      
+    networks:
+      - internalnet
+
+  frontend-prod:
+    image: 322507431145.dkr.ecr.us-east-1.amazonaws.com/tic-tac-toe-beanstalk-frontend:1.0.0
+    container_name: frontend-prod
+    ports:
+      - "80:80"
+    expose:
+      - 80
+    depends_on:
+      - backend-prod
+    networks:
+      - internalnet
+
+networks:
+  internalnet:
+    name: internalnet
+    driver: bridge
