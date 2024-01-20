@@ -1,4 +1,3 @@
 mongo-data/*
-.env
-.dev.env
+*.env
 .pushCommnands
