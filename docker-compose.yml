@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   backend-prod:
+    image: 322507431145.dkr.ecr.us-east-1.amazonaws.com/tic-tac-toe-beanstalk-backend:1.0.0
     build:
       context: ./TicTacToeBack/
       args:
@@ -26,6 +27,7 @@ services:
       - internalnet
 
   frontend-prod:
+    image: 322507431145.dkr.ecr.us-east-1.amazonaws.com/tic-tac-toe-beanstalk-frontend:1.0.0
     build:
       context: ./TicTacToeFront/
       args:

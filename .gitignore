@@ -1,3 +1,4 @@
 mongo-data/*
 *.env
 .pushCommnands
+docker-compose.beanstalk.yml
